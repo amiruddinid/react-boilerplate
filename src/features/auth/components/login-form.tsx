@@ -27,10 +27,10 @@ export const LoginForm = ({ onSuccess }: LoginFormProps) => {
         {({ register, formState }) => (
           <>
             <Input
-              type="email"
-              label="Email Address"
-              error={formState.errors['email']}
-              registration={register('email')}
+              type="text"
+              label="Username"
+              error={formState.errors['username']}
+              registration={register('username')}
             />
             <Input
               type="password"
@@ -42,7 +42,8 @@ export const LoginForm = ({ onSuccess }: LoginFormProps) => {
               <Button
                 isLoading={login.isPending}
                 type="submit"
-                className="w-full"
+                className="w-full h-12 bg-red-600 hover:bg-white 
+                hover:text-red-600"
               >
                 Log in
               </Button>

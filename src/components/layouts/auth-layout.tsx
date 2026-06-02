@@ -2,7 +2,8 @@ import * as React from 'react';
 import { useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router';
 
-import logo from '@/assets/logo.svg';
+import logo from '@/assets/toyota.svg';
+import pattern from '@/assets/bg-pattern.png';
 import { Head } from '@/components/seo';
 import { Link } from '@/components/ui/link';
 import { paths } from '@/config/paths';
@@ -31,7 +32,7 @@ export const AuthLayout = ({ children, title }: LayoutProps) => {
   return (
     <>
       <Head title={title} />
-      <div className="flex min-h-screen flex-col justify-center bg-gray-50 py-12 sm:px-6 lg:px-8">
+      <div className="flex min-h-screen flex-col justify-center bg-[url('/bg-pattern.png')] py-12 sm:px-6 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
           <div className="flex justify-center">
             <Link

@@ -11,7 +11,7 @@ import { api } from './api-client';
 // these are not part of features as this is a module shared across features
 
 const getUser = async (): Promise<User> => {
-  const response = await api.get('/auth/me');
+  const response = await api.get('/auth/profile');
 
   return response.data;
 };
@@ -21,7 +21,7 @@ const logout = (): Promise<void> => {
 };
 
 export const loginInputSchema = z.object({
-  email: z.string().min(1, 'Required').email('Invalid email'),
+  username: z.string().min(1, 'Required'),
   password: z.string().min(5, 'Required'),
 });
 

@@ -22,19 +22,38 @@ api.interceptors.response.use(
     return response.data;
   },
   (error) => {
+    const status = error.response?.status;
+    const requestUrl: string = error.config?.url || '';
+
+    // Skip notification + redirect for background auth-check (userFn).
+    // A 401 here simply means the user is not logged in — ProtectedRoute
+    // and react-query-auth will handle the redirect via <Navigate>.
+    const isAuthProfileRequest = requestUrl.includes('/auth/profile');
+
+    if (status === 401) {
+      const currentPath = window.location.pathname;
+      const isAuthPage =
+        currentPath === paths.auth.login.path ||
+        currentPath === paths.auth.register.path;
+
+      if (!isAuthPage && !isAuthProfileRequest) {
+        // Hard redirect only for actual authenticated-user actions
+        const searchParams = new URLSearchParams(window.location.search);
+        const redirectTo =
+          searchParams.get('redirectTo') || currentPath;
+        window.location.href = paths.auth.login.getHref(redirectTo);
+      }
+
+      // Never show a notification for 401s — they are handled by the router
+      return Promise.reject(error);
+    }
+
     const message = error.response?.data?.message || error.message;
     useNotifications.getState().addNotification({
       type: 'error',
       title: 'Error',
       message,
     });
-
-    if (error.response?.status === 401) {
-      const searchParams = new URLSearchParams();
-      const redirectTo =
-        searchParams.get('redirectTo') || window.location.pathname;
-      window.location.href = paths.auth.login.getHref(redirectTo);
-    }
 
     return Promise.reject(error);
   },

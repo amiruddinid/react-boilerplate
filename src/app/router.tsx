@@ -45,16 +45,16 @@ export const createAppRouter = (queryClient: QueryClient) =>
       ErrorBoundary: AppRootErrorBoundary,
       children: [
         {
-          path: paths.app.discussions.path,
+          path: paths.app.masterMaterial.path,
           lazy: () =>
-            import('./routes/app/discussions/discussions').then(
+            import('./routes/app/master/material').then(
               convert(queryClient),
             ),
         },
         {
-          path: paths.app.discussion.path,
+          path: paths.app.masterMaterialDetail.path,
           lazy: () =>
-            import('./routes/app/discussions/discussion').then(
+            import('./routes/app/master/material-detail').then(
               convert(queryClient),
             ),
         },

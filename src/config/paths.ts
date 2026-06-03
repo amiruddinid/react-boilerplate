@@ -26,13 +26,13 @@ export const paths = {
       path: '',
       getHref: () => '/app',
     },
-    discussions: {
-      path: 'discussions',
-      getHref: () => '/app/discussions',
+    masterMaterial: {
+      path: 'master/material',
+      getHref: () => '/app/master/material',
     },
-    discussion: {
-      path: 'discussions/:discussionId',
-      getHref: (id: string) => `/app/discussions/${id}`,
+    masterMaterialDetail: {
+      path: 'master/material/:id',
+      getHref: (id: string) => `/app/master/material/${id}`,
     },
     users: {
       path: 'users',

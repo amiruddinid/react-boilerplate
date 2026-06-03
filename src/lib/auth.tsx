@@ -23,7 +23,8 @@ const getUser = async (): Promise<User | null> => {
 };
 
 const logout = (): Promise<void> => {
-  return api.post('/auth/logout');
+  localStorage.removeItem('token');
+  return Promise.resolve();
 };
 
 export const loginInputSchema = z.object({
@@ -69,7 +70,10 @@ const authConfig = {
   userFn: getUser,
   loginFn: async (data: LoginInput) => {
     const response = await loginWithEmailAndPassword(data);
-    return response.user;
+    console.log('login response', response);
+    const token = response.token;
+    localStorage.setItem('token', token)
+    return response;
   },
   registerFn: async (data: RegisterInput) => {
     const response = await registerWithEmailAndPassword(data);

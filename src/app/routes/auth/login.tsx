@@ -13,6 +13,8 @@ const LoginRoute = () => {
     <AuthLayout title="Welcome back!">
       <LoginForm
         onSuccess={() => {
+          console.log('Login successful!');
+          console.log('Redirecting to:', redirectTo);
           navigate(
             `${redirectTo ? `${redirectTo}` : paths.app.dashboard.getHref()}`,
             {

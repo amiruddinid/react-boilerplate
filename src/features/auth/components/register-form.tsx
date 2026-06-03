@@ -39,59 +39,41 @@ export const RegisterForm = ({
           <>
             <Input
               type="text"
-              label="First Name"
-              error={formState.errors['firstName']}
-              registration={register('firstName')}
+              label="Username"
+              error={formState.errors['USERNAME']}
+              registration={register('USERNAME')}
             />
             <Input
               type="text"
-              label="Last Name"
-              error={formState.errors['lastName']}
-              registration={register('lastName')}
+              label="Noreg"
+              error={formState.errors['NOREG']}
+              registration={register('NOREG')}
             />
             <Input
               type="email"
               label="Email Address"
-              error={formState.errors['email']}
-              registration={register('email')}
+              error={formState.errors['EMAIL']}
+              registration={register('EMAIL')}
             />
             <Input
               type="password"
               label="Password"
-              error={formState.errors['password']}
-              registration={register('password')}
+              error={formState.errors['PASSWORD']}
+              registration={register('PASSWORD')}
             />
 
-            <div className="flex items-center space-x-2">
-              <Switch
-                checked={chooseTeam}
-                onCheckedChange={setChooseTeam}
-                className={`${
-                  chooseTeam ? 'bg-blue-600' : 'bg-gray-200'
-                } relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2`}
-                id="choose-team"
-              />
-              <Label htmlFor="airplane-mode">Join Existing Team</Label>
-            </div>
-
-            {chooseTeam && teams ? (
-              <Select
-                label="Team"
-                error={formState.errors['teamId']}
-                registration={register('teamId')}
-                options={teams?.map((team) => ({
-                  label: team.name,
-                  value: team.id,
-                }))}
-              />
-            ) : (
-              <Input
-                type="text"
-                label="Team Name"
-                error={formState.errors['teamName']}
-                registration={register('teamName')}
-              />
-            )}
+            <Select
+              label="Role"
+              error={formState.errors['ROLE_ID']}
+              registration={register('ROLE_ID', { valueAsNumber: true })}
+              options={[{
+                label: 'Superadmin',
+                value: 1,
+              }, {
+                label: 'Staff',
+                value: 2,
+              }]}
+            />
             <div>
               <Button
                 isLoading={registering.isPending}

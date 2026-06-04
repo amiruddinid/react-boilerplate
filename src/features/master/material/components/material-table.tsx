@@ -12,26 +12,31 @@ const MaterialTable = () => {
 
   return (
     <Table
-      data={[
-        {
-          id: '1',
-          name: 'Material 1',
-          description: 'Description for Material 1',
-          quantity: 100,
-        },
-      ]}
+      data={data.data}
       columns={[
         {
-          title: 'Material Name',
-          field: 'name',
+          title: 'ID',
+          field: 'ID',
         },
         {
-          title: 'Description',
-          field: 'description',
+          title: 'Name',
+          field: 'NAME',
         },
         {
-          title: 'Quantity',
-          field: 'quantity',
+          title: 'Part Number',
+          field: 'PART_NUMBER',
+        },
+        {
+          title: 'Unit',
+          field: 'UNIT',
+        },
+        {
+          title: 'Created By',
+          field: 'CREATED_BY',
+        },
+        {
+          title: 'Created Date',
+          field: 'CREATED_DT',
         },
       ]}
     />

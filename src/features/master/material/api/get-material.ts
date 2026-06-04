@@ -8,6 +8,7 @@ export const getMaterial = (): Promise<any> => {
   return api.get('/material');
 };
 
+// React Query options / config for fetching material data
 export const getMaterialQueryOptions = () => {
   return queryOptions({
     queryKey: ['material'],
@@ -15,6 +16,7 @@ export const getMaterialQueryOptions = () => {
   });
 };
 
+// Types for the useMaterial hook options
 type UseMaterialOptions = {
   queryConfig?: QueryConfig<typeof getMaterialQueryOptions>;
 };

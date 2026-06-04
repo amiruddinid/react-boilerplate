@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { useState, useEffect } from 'react';
 
 import { Table } from '@/components/ui/table';
@@ -18,6 +19,32 @@ const MaterialTable = () => {
     resultnonState + 1;
     console.log(resultnonState);
   };
+
+  // fetch data material tanpa react-query
+  const [data, setData] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('http://localhost:1337/api/material', {
+          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+        });
+
+        setData(response.data);
+        console.log('Material Data:', response.data);
+      } catch (error) {
+        console.error('Error fetching material data:', error);
+      }
+    };
+
+    fetchData();
+  }, []); // Empty dependency array means this runs once on mount
+
+  useEffect(() => {
+    alert(`Result state changed: ${result}`);
+  }, [result]);
+
   return (
     //react fragm
     <div>

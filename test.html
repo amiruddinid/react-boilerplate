@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Amiruddin Portfolio</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300;400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <!-- Tailwind Config -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#7f13ec",
+                        "background-light": "#f7f6f8",
+                        "background-dark": "#191022",
+                        "surface-dark": "#261933",
+                        "border-dark": "#362348",
+                    },
+                    fontFamily: {
+                        "display": ["Spline Sans", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+    <style>
+        /* Custom Animations for the Hero Typography */
+        @keyframes fadeSlideUp {
+            0% {
+                opacity: 0;
+                transform: translateY(40px) scale(0.9);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .letter-animate {
+            opacity: 0;
+            /* Start hidden */
+            animation: fadeSlideUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+            display: inline-block;
+        }
+
+        /* Stagger delays */
+        .letter-animate:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .letter-animate:nth-child(2) {
+            animation-delay: 0.15s;
+        }
+
+        .letter-animate:nth-child(3) {
+            animation-delay: 0.2s;
+        }
+
+        .letter-animate:nth-child(4) {
+            animation-delay: 0.25s;
+        }
+
+        .letter-animate:nth-child(5) {
+            animation-delay: 0.3s;
+        }
+
+        .letter-animate:nth-child(6) {
+            animation-delay: 0.35s;
+        }
+
+        .letter-animate:nth-child(7) {
+            animation-delay: 0.4s;
+        }
+
+        .letter-animate:nth-child(8) {
+            animation-delay: 0.45s;
+        }
+
+        .letter-animate:nth-child(9) {
+            animation-delay: 0.5s;
+        }
+
+        /* Custom scrollbar for better aesthetic */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #191022;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #362348;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #7f13ec;
+        }
+    </style>
+</head>
+
+<body
+    class="font-display bg-background-light dark:bg-background-dark text-slate-900 dark:text-white antialiased overflow-x-hidden">
+    <div class="relative flex h-auto min-h-screen w-full flex-col">
+        <!-- Top Navigation -->
+        <div class="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-background-dark/80 border-b border-border-dark">
+            <div class="layout-container flex justify-center w-full">
+                <div class="layout-content-container flex max-w-[1200px] w-full px-4 sm:px-8">
+                    <header class="flex flex-1 items-center justify-between whitespace-nowrap py-4">
+                        <div class="flex items-center gap-4 text-white">
+                            <div class="size-8 flex items-center justify-center rounded-lg bg-primary/20 text-primary">
+                                <span class="material-symbols-outlined text-2xl">change_history</span>
+                            </div>
+                            <h2 class="text-white text-lg font-bold leading-tight tracking-tight">Amiruddin.</h2>
+                        </div>
+                        <div class="flex items-center gap-8 hidden md:flex">
+                            <nav class="flex items-center gap-8">
+                                <a class="text-gray-300 hover:text-white text-sm font-medium transition-colors"
+                                    href="#work">Work</a>
+                                <a class="text-gray-300 hover:text-white text-sm font-medium transition-colors"
+                                    href="#expertise">Expertise</a>
+                                <a class="text-gray-300 hover:text-white text-sm font-medium transition-colors"
+                                    href="#about">About</a>
+                            </nav>
+                            <button
+                                class="flex cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 px-6 bg-primary hover:bg-primary/90 transition-colors text-white text-sm font-bold shadow-[0_0_15px_rgba(127,19,236,0.5)]">
+                                <span class="truncate">Let's Talk</span>
+                            </button>
+                        </div>
+                        <!-- Mobile Menu Icon -->
+                        <div class="md:hidden text-white">
+                            <span class="material-symbols-outlined cursor-pointer">menu</span>
+                        </div>
+                    </header>
+                </div>
+            </div>
+        </div>
+        <!-- Hero Section -->
+        <div class="flex-1 flex flex-col items-center justify-center pt-32 pb-20 min-h-screen relative overflow-hidden">
+            <!-- Decorative Background Glows -->
+            <div
+                class="absolute top-1/3 left-1/4 w-96 h-96 bg-primary/20 rounded-full blur-[128px] pointer-events-none -z-10">
+            </div>
+            <div
+                class="absolute bottom-0 right-0 w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[128px] pointer-events-none -z-10">
+            </div>
+            <div class="layout-content-container max-w-[1200px] px-4 sm:px-8 w-full flex flex-col items-center z-10">
+                <div class="flex flex-col items-center text-center gap-2 mb-8">
+                    <span
+                        class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-surface-dark border border-border-dark text-xs font-medium text-gray-300 uppercase tracking-wider mb-4 animate-pulse">
+                        <span class="w-2 h-2 rounded-full bg-green-500"></span> Available for new projects
+                    </span>
+                    <!-- Creative Typography Name -->
+                    <div aria-label="Amiruddin" class="perspective-[1000px] select-none cursor-default group">
+                        <h1
+                            class="font-black text-[13vw] sm:text-[14vw] leading-[0.85] tracking-tighter flex flex-wrap justify-center gap-x-1 sm:gap-x-4 mix-blend-overlay opacity-90">
+                            <span
+                                class="letter-animate transition-all duration-300 hover:text-primary hover:-translate-y-4 hover:rotate-2 hover:scale-110">A</span>
+                            <span
+                                class="letter-animate transition-all duration-300 hover:text-primary hover:-translate-y-6 hover:-rotate-2 hover:scale-110">M</span>
+                            <span
+                                class="letter-animate transition-all duration-300 hover:text-primary hover:-translate-y-3 hover:rotate-3 hover:scale-110">I</span>
+                            <span
+                                class="letter-animate transition-all duration-300 hover:text-primary hover:-translate-y-5 hover:-rotate-1 hover:scale-110">R</span>
+                            <span
+                                class="letter-animate transition-all duration-300 hover:text-primary hover:-translate-y-4 hover:rotate-2 hover:scale-110">U</span>
+                            <span
+                                class="letter-animate transition-all duration-300 hover:text-primary hover:-translate-y-7 hover:-rotate-3 hover:scale-110">D</span>
+                            <span
+                                class="letter-animate transition-all duration-300 hover:text-primary hover:-translate-y-2 hover:rotate-1 hover:scale-110">D</span>
+                            <span
+                                class="letter-animate transition-all duration-300 hover:text-primary hover:-translate-y-5 hover:-rotate-2 hover:scale-110">I</span>
+                            <span
+                                class="letter-animate transition-all duration-300 hover:text-primary hover:-translate-y-4 hover:rotate-3 hover:scale-110">N</span>
+                        </h1>
+                    </div>
+                </div>
+                <div class="flex flex-col items-center gap-8 max-w-2xl text-center fade-in-up"
+                    style="animation-delay: 0.8s;">
+                    <p class="text-lg sm:text-xl text-gray-400 font-light leading-relaxed">
+                        Creative Developer &amp; Digital Artist crafting immersive <span
+                            class="text-white font-medium border-b border-primary">interactive experiences</span> and
+                        minimal interfaces.
+                    </p>
+                    <div class="flex gap-4 pt-4">
+                        <button
+                            class="flex items-center justify-center gap-2 h-12 px-8 rounded-lg bg-white text-background-dark text-base font-bold transition-transform hover:scale-105 active:scale-95">
+                            <span>View Projects</span>
+                            <span class="material-symbols-outlined text-lg">arrow_downward</span>
+                        </button>
+                        <button
+                            class="flex items-center justify-center gap-2 h-12 px-8 rounded-lg border border-border-dark bg-surface-dark text-white text-base font-medium transition-colors hover:bg-border-dark">
+                            <span>About Me</span>
+                        </button>
+                    </div>
+                </div>
+                <!-- Floating Scroll Indicator -->
+                <div
+                    class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-gray-500 animate-bounce">
+                    <span class="text-xs uppercase tracking-widest">Scroll</span>
+                </div>
+            </div>
+        </div>
+        <!-- Expertise Section -->
+        <div class="relative py-20 sm:py-32 bg-background-dark" id="expertise">
+            <div class="layout-container flex justify-center w-full">
+                <div class="layout-content-container max-w-[1200px] px-4 sm:px-8 w-full">
+                    <div class="flex flex-col gap-10">
+                        <div class="flex flex-col gap-4 max-w-[720px]">
+                            <h2 class="text-white text-3xl sm:text-4xl font-bold leading-tight">
+                                Expertise
+                            </h2>
+                            <p class="text-gray-400 text-lg font-normal leading-relaxed">
+                                Bridging the gap between design and engineering with a focus on motion and usability.
+                            </p>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <!-- Card 1 -->
+                            <div
+                                class="group flex flex-col gap-4 rounded-xl border border-border-dark bg-surface-dark p-8 transition-all duration-300 hover:border-primary/50 hover:shadow-[0_0_30px_rgba(127,19,236,0.15)]">
+                                <div
+                                    class="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors duration-300">
+                                    <span class="material-symbols-outlined text-3xl">brush</span>
+                                </div>
+                                <div class="flex flex-col gap-2">
+                                    <h3 class="text-white text-xl font-bold">UI/UX Design</h3>
+                                    <p class="text-gray-400 text-sm leading-relaxed">Crafting intuitive interfaces with
+                                        a focus on typography, layout, and micro-interactions.</p>
+                                </div>
+                            </div>
+                            <!-- Card 2 -->
+                            <div
+                                class="group flex flex-col gap-4 rounded-xl border border-border-dark bg-surface-dark p-8 transition-all duration-300 hover:border-primary/50 hover:shadow-[0_0_30px_rgba(127,19,236,0.15)]">
+                                <div
+                                    class="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors duration-300">
+                                    <span class="material-symbols-outlined text-3xl">code</span>
+                                </div>
+                                <div class="flex flex-col gap-2">
+                                    <h3 class="text-white text-xl font-bold">Frontend Dev</h3>
+                                    <p class="text-gray-400 text-sm leading-relaxed">Building responsive web apps using
+                                        modern frameworks like React, Vue, and Tailwind CSS.</p>
+                                </div>
+                            </div>
+                            <!-- Card 3 -->
+                            <div
+                                class="group flex flex-col gap-4 rounded-xl border border-border-dark bg-surface-dark p-8 transition-all duration-300 hover:border-primary/50 hover:shadow-[0_0_30px_rgba(127,19,236,0.15)]">
+                                <div
+                                    class="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors duration-300">
+                                    <span class="material-symbols-outlined text-3xl">animation</span>
+                                </div>
+                                <div class="flex flex-col gap-2">
+                                    <h3 class="text-white text-xl font-bold">Motion Graphics</h3>
+                                    <p class="text-gray-400 text-sm leading-relaxed">Adding life to interactions through
+                                        WebGL, CSS animations, and SVG manipulation.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Work Section / Image Grid -->
+        <div class="relative py-20 bg-background-dark" id="work">
+            <div class="layout-container flex justify-center w-full">
+                <div class="layout-content-container max-w-[1200px] px-4 sm:px-8 w-full">
+                    <div class="flex items-end justify-between mb-10">
+                        <div class="flex flex-col gap-2">
+                            <h2 class="text-white text-3xl sm:text-4xl font-bold leading-tight">Selected Work</h2>
+                            <p class="text-gray-400">A curation of my recent digital products.</p>
+                        </div>
+                        <a class="hidden sm:flex items-center gap-1 text-primary hover:text-white transition-colors text-sm font-bold"
+                            href="#">
+                            View All <span class="material-symbols-outlined text-lg">arrow_forward</span>
+                        </a>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <!-- Project 1 -->
+                        <div class="group flex flex-col gap-4">
+                            <div class="relative w-full aspect-[4/3] rounded-xl overflow-hidden">
+                                <div
+                                    class="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity z-10">
+                                </div>
+                                <div class="w-full h-full bg-cover bg-center transition-transform duration-500 group-hover:scale-110"
+                                    data-alt="Abstract dark interface with purple neon accents representing a dashboard"
+                                    style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDd8G1wEIS0bO2bfTTIEMxWEgSuzZLHgnSwl7bvjVPkxA6jMKI5ZEsnpzpBxZIlQD6CT3O-ik_B8XlokW2wGSZ3vQnDxY94qxTkMN4MMjgWnia3G0yWOHEwkZ3Cwd1y_-bTUC006CPql8fc0YUagUNI83VKX6jGd1zTFNw08pJd2AMd1-k2GcojiWpCcUcEFEKll359rwW8_2p63Ctr7QzlnRTsHaGNpyV30kLRWfyBTR_XwFAn-fcQ0OusRcdrFmzqiwkk-gpGykEW");'>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex items-center justify-between">
+                                    <h3 class="text-white text-lg font-bold group-hover:text-primary transition-colors">
+                                        Project Alpha</h3>
+                                    <span
+                                        class="material-symbols-outlined text-gray-500 group-hover:translate-x-1 transition-transform">arrow_outward</span>
+                                </div>
+                                <p class="text-gray-400 text-sm mt-1">Web Design &amp; Development</p>
+                            </div>
+                        </div>
+                        <!-- Project 2 -->
+                        <div class="group flex flex-col gap-4">
+                            <div class="relative w-full aspect-[4/3] rounded-xl overflow-hidden">
+                                <div
+                                    class="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity z-10">
+                                </div>
+                                <div class="w-full h-full bg-cover bg-center transition-transform duration-500 group-hover:scale-110"
+                                    data-alt="Mobile application screens displayed on a minimalist background"
+                                    style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBmgq6-PIkPqlnWp-GHDEeKnhivxXjPpqtwDUkUU2JkTCdwK0ze7wLyXMTL1v0qTxgrqoXF9Be0i4J48CDhvo5QO9rS4W_wfg2sCQn514KRJc69TJrXDNc8gfPntsIuB8wnUIPat5MKf2dHC8EZZpI65WuQs_BniB0Zc0k843eaushWR1tA8-pWBxyW8BnGOCJ2c1wMSGUq8lkzlnhSYdzZtliTP5X5pXxUgIykCixUbaq30JYpNEYK_f0QC9wu7bHdSr7HLvKwUn8X");'>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex items-center justify-between">
+                                    <h3 class="text-white text-lg font-bold group-hover:text-primary transition-colors">
+                                        Project Beta</h3>
+                                    <span
+                                        class="material-symbols-outlined text-gray-500 group-hover:translate-x-1 transition-transform">arrow_outward</span>
+                                </div>
+                                <p class="text-gray-400 text-sm mt-1">App Development</p>
+                            </div>
+                        </div>
+                        <!-- Project 3 -->
+                        <div class="group flex flex-col gap-4">
+                            <div class="relative w-full aspect-[4/3] rounded-xl overflow-hidden">
+                                <div
+                                    class="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity z-10">
+                                </div>
+                                <div class="w-full h-full bg-cover bg-center transition-transform duration-500 group-hover:scale-110"
+                                    data-alt="3D geometric shapes with soft lighting for branding identity"
+                                    style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCvR6bTdP5u8PWRGxTU-X84MA8Bd_HOgcCEtLnDnXCUvGaxQuMzNl9BeqGmVoB73qQhXG8CqK49cgJFG1wSeqYm2GEY481l9u9r8xBDEBl4lh1yeuZtvO9OFhN76sGVpEfCdGBf7y-2hAKT1n3ixlN-J13VXnkFuqHE0YJDMPvl_bF-cRdK7AvBW36YZw651WYsBioH3RwXb2GjNLbGQFcqCfHnr544PY0i-kKogwGXX7lLj_P-5mtBefiLx6V2ZufobfZtGWptouzy");'>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex items-center justify-between">
+                                    <h3 class="text-white text-lg font-bold group-hover:text-primary transition-colors">
+                                        Project Gamma</h3>
+                                    <span
+                                        class="material-symbols-outlined text-gray-500 group-hover:translate-x-1 transition-transform">arrow_outward</span>
+                                </div>
+                                <p class="text-gray-400 text-sm mt-1">Branding &amp; Identity</p>
+                            </div>
+                        </div>
+                    </div>
+                    <a class="flex sm:hidden items-center justify-center gap-1 text-primary hover:text-white transition-colors text-sm font-bold mt-8"
+                        href="#">
+                        View All Projects <span class="material-symbols-outlined text-lg">arrow_forward</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!-- Footer -->
+        <div class="border-t border-border-dark bg-background-dark">
+            <div class="layout-container flex justify-center w-full">
+                <div class="layout-content-container max-w-[1200px] w-full px-4 sm:px-8">
+                    <footer class="flex flex-col gap-8 py-12 text-center">
+                        <div class="flex flex-col gap-4 items-center">
+                            <h2 class="text-2xl font-bold text-white">Let's create something extraordinary.</h2>
+                            <p class="text-gray-400 max-w-md">I'm currently available for freelance projects. Open for
+                                collaboration on web and mobile applications.</p>
+                            <a class="text-primary hover:text-white font-medium text-lg transition-colors underline decoration-2 decoration-primary/30 underline-offset-4 hover:decoration-primary"
+                                href="mailto:hello@amiruddin.com">hello@amiruddin.com</a>
+                        </div>
+                        <div class="flex flex-wrap justify-center gap-6 mt-4">
+                            <a class="w-10 h-10 rounded-full border border-border-dark bg-surface-dark flex items-center justify-center text-gray-400 hover:text-white hover:border-primary hover:bg-primary transition-all duration-300"
+                                href="#">
+                                <span class="material-symbols-outlined text-xl">code</span>
+                                <!-- GitHub/Code placeholder -->
+                            </a>
+                            <a class="w-10 h-10 rounded-full border border-border-dark bg-surface-dark flex items-center justify-center text-gray-400 hover:text-white hover:border-primary hover:bg-primary transition-all duration-300"
+                                href="#">
+                                <span class="material-symbols-outlined text-xl">work</span>
+                                <!-- LinkedIn placeholder -->
+                            </a>
+                            <a class="w-10 h-10 rounded-full border border-border-dark bg-surface-dark flex items-center justify-center text-gray-400 hover:text-white hover:border-primary hover:bg-primary transition-all duration-300"
+                                href="#">
+                                <span class="material-symbols-outlined text-xl">alternate_email</span>
+                                <!-- Twitter/X placeholder -->
+                            </a>
+                            <a class="w-10 h-10 rounded-full border border-border-dark bg-surface-dark flex items-center justify-center text-gray-400 hover:text-white hover:border-primary hover:bg-primary transition-all duration-300"
+                                href="#">
+                                <span class="material-symbols-outlined text-xl">palette</span>
+                                <!-- Dribbble placeholder -->
+                            </a>
+                        </div>
+                        <div class="pt-8 border-t border-border-dark w-full">
+                            <p class="text-gray-500 text-sm font-normal leading-normal">© 2023 Amiruddin. Based in <span
+                                    class="text-gray-400" data-location="Jakarta, Indonesia">Jakarta, Indonesia</span>.
+                                All rights reserved.</p>
+                        </div>
+                    </footer>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

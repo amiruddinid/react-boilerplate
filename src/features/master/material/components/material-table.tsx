@@ -1,6 +1,15 @@
 import { Table } from '@/components/ui/table';
 
+import { useMaterial } from '../api/get-material';
+
 const MaterialTable = () => {
+  const { data, isLoading, error } = useMaterial();
+
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error occurred while fetching material data.</div>;
+
+  console.log('Material Data:', data);
+
   return (
     <Table
       data={[

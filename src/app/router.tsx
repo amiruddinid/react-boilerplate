@@ -32,7 +32,7 @@ export const createAppRouter = (queryClient: QueryClient) =>
       lazy: () => import('./routes/auth/register').then(convert(queryClient)),
     },
     {
-      path: "/auth/login",
+      path: '/auth/login',
       lazy: () => import('./routes/auth/login').then(convert(queryClient)),
     },
     {
@@ -47,7 +47,12 @@ export const createAppRouter = (queryClient: QueryClient) =>
         {
           path: paths.app.masterMaterial.path,
           lazy: () =>
-            import('./routes/app/master/material').then(
+            import('./routes/app/master/material').then(convert(queryClient)),
+        },
+        {
+          path: '/app/master/materialold',
+          lazy: () =>
+            import('./routes/app/master/material-old').then(
               convert(queryClient),
             ),
         },

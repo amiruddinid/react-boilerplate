@@ -3,6 +3,7 @@ import { queryOptions, useQuery } from '@tanstack/react-query';
 import { api } from '@/lib/api-client'; //axios
 import { QueryConfig } from '@/lib/react-query';
 
+// API Call to get material data
 export const getMaterial = (): Promise<any> => {
   return api.get('/material');
 };
@@ -18,7 +19,7 @@ type UseMaterialOptions = {
   queryConfig?: QueryConfig<typeof getMaterialQueryOptions>;
 };
 
-export const useMaterial = ({ queryConfig }: UseMaterialOptions) => {
+export const useMaterial = ({ queryConfig }: UseMaterialOptions = {}) => {
   return useQuery({
     ...getMaterialQueryOptions(),
     ...queryConfig,

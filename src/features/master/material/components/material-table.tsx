@@ -12,7 +12,7 @@ const MaterialTable = () => {
 
   return (
     <Table
-      data={data.data}
+      data={data?.data}
       columns={[
         {
           title: 'ID',

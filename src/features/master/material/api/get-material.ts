@@ -4,23 +4,23 @@ import { api } from '@/lib/api-client'; //axios
 import { QueryConfig } from '@/lib/react-query';
 
 export const getMaterial = (): Promise<any> => {
-    return api.get('/material');
+  return api.get('/material');
 };
 
 export const getMaterialQueryOptions = () => {
-    return queryOptions({
-        queryKey: ['material'],
-        queryFn: getMaterial,
-    });
+  return queryOptions({
+    queryKey: ['material'],
+    queryFn: getMaterial,
+  });
 };
 
 type UseMaterialOptions = {
-    queryConfig?: QueryConfig<typeof getMaterialQueryOptions>;
+  queryConfig?: QueryConfig<typeof getMaterialQueryOptions>;
 };
 
 export const useMaterial = ({ queryConfig }: UseMaterialOptions) => {
-    return useQuery({
-        ...getMaterialQueryOptions(),
-        ...queryConfig,
-    });
+  return useQuery({
+    ...getMaterialQueryOptions(),
+    ...queryConfig,
+  });
 };

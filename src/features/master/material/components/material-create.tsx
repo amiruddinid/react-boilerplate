@@ -1,13 +1,50 @@
 import { Form, Input } from '@/components/ui/form';
+//react-hook-form
+import { useCreateMaterial, createMaterialInputSchema } 
+    from '../api/create-material';
+import { Button } from '@/components/ui/button';
 
 const CreateMaterial = () => {
+    const createMaterial = useCreateMaterial();
+
     return (
-        <Form>
-            <Input type="text" label="Material Name"/>
-            <Input type="text" label="Part Number"/>
-            <Input type="text" label="Unit"/>
-            <Input type="text" label="Category"/>
-            <Input type="text" label="Supplier ID"/>
+        <Form
+            onSubmit={(values) => {
+                console.log('value dari form create material', values)
+                createMaterial.mutate(values)
+            }}
+            schema={createMaterialInputSchema}
+            >
+             {({ register, formState}) => (
+                <>
+                    <Input
+                        registration={register('NAME')}
+                        error={formState.errors['NAME']}
+                        type="text" 
+                        label="Material Name"/>
+                    <Input 
+                        registration={register('PART_NUMBER')}
+                        error={formState.errors['PART_NUMBER']}
+                        type="text" label="Part Number"/>
+                    <Input
+                        registration={register('UNIT')}
+                        error={formState.errors['UNIT']} 
+                        type="text" label="Unit"/>
+                    <Input 
+                        registration={register('CATEGORY')}
+                        error={formState.errors['CATEGORY']}
+                        type="text" label="Category"/>
+                    <Input
+                        registration={register('SUPPLIER_ID')}
+                        error={formState.errors['SUPPLIER_ID']}
+                        type="text" label="Supplier ID"/>
+                    <Button
+                        type='submit'
+                    >
+                        Add Material
+                    </Button>
+                </>
+             )}
         </Form>
     )
 }

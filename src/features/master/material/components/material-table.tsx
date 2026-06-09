@@ -6,6 +6,7 @@ import { Table } from '@/components/ui/table';
 
 import { useMaterial } from '../api/get-material';
 import { Button } from '@/components/ui/button';
+import MaterialDelete from './material-delete';
 
 const MaterialTable = () => {
   const { data, isLoading, error } = useMaterial();
@@ -28,9 +29,12 @@ const MaterialTable = () => {
           {
             title: '',
             Cell: (row) => (
-              <Link to={`/app/master/material/${row.entry.ID}`}>
-                <EyeIcon className="size-5 text-blue-500 hover:underline" />
-              </Link>
+              <div className='flex items-center'>
+                <Link to={`/app/master/material/${row.entry.ID}`}>
+                  <EyeIcon className="size-5 text-blue-500 hover:underline" />
+                </Link>
+                <MaterialDelete id={row.entry.ID} />
+              </div>
             ),
           },
           {

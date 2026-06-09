@@ -15,7 +15,7 @@ export const createMaterialInputSchema = z.object({
 export type CreateMaterialInput = z.infer<typeof createMaterialInputSchema>;
 
 export const createMaterial = async (data: CreateMaterialInput) => {
-    const response = await api.post('/master/material', data);
+    const response = await api.post('/material', data);
     return response.data;
 };
 

@@ -3,9 +3,23 @@ import { Form, Input } from '@/components/ui/form';
 import { useCreateMaterial, createMaterialInputSchema } 
     from '../api/create-material';
 import { Button } from '@/components/ui/button';
+import { useNotifications } from '@/components/ui/notifications';
+import { useNavigate } from 'react-router';
 
 const CreateMaterial = () => {
-    const createMaterial = useCreateMaterial();
+    const { addNotification } = useNotifications();
+    const navigate = useNavigate();
+    const createMaterial = useCreateMaterial({
+        mutationConfig: {
+            onSuccess: () => {
+                navigate(-1);
+                addNotification({
+                    type: 'success',
+                    title: 'Create Material Succeeded!'
+                })
+            }
+        }
+    });
 
     return (
         <Form
@@ -15,7 +29,7 @@ const CreateMaterial = () => {
             }}
             schema={createMaterialInputSchema}
             >
-             {({ register, formState}) => (
+             {({ register, formState }) => (
                 <>
                     <Input
                         registration={register('NAME')}
@@ -39,6 +53,7 @@ const CreateMaterial = () => {
                         error={formState.errors['SUPPLIER_ID']}
                         type="text" label="Supplier ID"/>
                     <Button
+                        disabled={createMaterial.isPending}
                         type='submit'
                     >
                         Add Material

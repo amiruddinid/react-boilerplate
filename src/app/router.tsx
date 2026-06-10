@@ -71,6 +71,13 @@ export const createAppRouter = (queryClient: QueryClient) =>
             ),
         },
         {
+          path: paths.app.masterMaterialEdit.path,
+          lazy: () =>
+            import('./routes/app/master/edit-material').then(
+              convert(queryClient),
+            ),
+        },
+        {
           path: paths.app.users.path,
           lazy: () => import('./routes/app/users').then(convert(queryClient)),
         },

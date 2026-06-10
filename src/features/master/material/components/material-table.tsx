@@ -1,4 +1,4 @@
-import { EyeIcon } from 'lucide-react';
+import { EyeIcon, Pencil } from 'lucide-react';
 import { Link, useNavigate } from 'react-router';
 import { paths } from '@/config/paths';
 
@@ -32,6 +32,9 @@ const MaterialTable = () => {
               <div className='flex items-center'>
                 <Link to={`/app/master/material/${row.entry.ID}`}>
                   <EyeIcon className="size-5 text-blue-500 hover:underline" />
+                </Link>
+                <Link to={`/app/master/material/${row.entry.ID}/edit`}>
+                  <Pencil className="size-5 text-yellow-500 hover:underline" />
                 </Link>
                 <MaterialDelete id={row.entry.ID} />
               </div>

@@ -38,6 +38,10 @@ export const paths = {
       path: 'master/material/create',
       getHref: () => '/app/master/material/create',
     },
+    masterMaterialEdit: {
+      path: 'master/material/:id/edit',
+      getHref: (id: string) => `/app/master/material/${id}/edit`,
+    },
     users: {
       path: 'users',
       getHref: () => '/app/users',

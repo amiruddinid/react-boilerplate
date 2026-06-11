@@ -253,6 +253,16 @@ export const createAppRouter = (queryClient: QueryClient) =>
           lazy: () => import('./routes/app/users').then(convert(queryClient)),
         },
         {
+          path: paths.app.autoOrder.path,
+          lazy: () =>
+            import('./routes/app/auto-order').then(convert(queryClient)),
+        },
+        {
+          path: paths.app.inventory.path,
+          lazy: () =>
+            import('./routes/app/inventory').then(convert(queryClient)),
+        },
+        {
           path: paths.app.profile.path,
           lazy: () => import('./routes/app/profile').then(convert(queryClient)),
         },

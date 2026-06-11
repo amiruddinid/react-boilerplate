@@ -170,9 +170,29 @@ export const paths = {
       path: 'master/bom/:id/edit',
       getHref: (id: string) => `/app/master/bom/${id}/edit`,
     },
+    production: {
+      path: 'transaction/production/',
+      getHref: () => `/app/transaction/production/`,
+    },
+    productionCreate: {
+      path: 'transaction/production/create',
+      getHref: () => `/app/transaction/production/create`,
+    },
+    productionDetail: {
+      path: 'transaction/production/:id',
+      getHref: (id: string) => `/app/transaction/production/${id}`,
+    },
     users: {
       path: 'users',
       getHref: () => '/app/users',
+    },
+    autoOrder: {
+      path: 'auto-order',
+      getHref: () => '/app/auto-order',
+    },
+    inventory: {
+      path: 'inventory',
+      getHref: () => '/app/inventory',
     },
     profile: {
       path: 'profile',

@@ -11,9 +11,12 @@ import {
   Key,
   User,
   ClipboardList,
+  ChevronRight,
+  Settings,
+  Layers,
 } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { NavLink, useNavigate, useNavigation } from 'react-router';
+import { NavLink, useNavigate, useNavigation, useLocation } from 'react-router';
 
 import logo from '@/assets/logo.svg';
 import { Button } from '@/components/ui/button';
@@ -32,11 +35,27 @@ import {
 } from '../ui/dropdown';
 import { Link } from '../ui/link';
 
-type SideNavigationItem = {
+type NavigationLink = {
   name: string;
   to: string;
-  icon: (props: React.SVGProps<SVGSVGElement>) => JSX.Element;
+  icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
 };
+
+type NavigationGroup = {
+  type: 'group';
+  name: string;
+  icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
+  items: NavigationLink[];
+};
+
+type NavigationItem =
+  | {
+      type: 'link';
+      name: string;
+      to: string;
+      icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
+    }
+  | NavigationGroup;
 
 const Logo = () => {
   return (
@@ -89,88 +108,232 @@ const Progress = () => {
   );
 };
 
+function CollapsibleNavigationGroup({
+  group,
+  pathname,
+}: {
+  group: NavigationGroup;
+  pathname: string;
+}) {
+  const isChildActive = group.items.some(
+    (item) => pathname === item.to || pathname.startsWith(item.to + '/'),
+  );
+  const [isOpen, setIsOpen] = useState(isChildActive);
+
+  useEffect(() => {
+    if (isChildActive) {
+      setIsOpen(true);
+    }
+  }, [isChildActive]);
+
+  const Icon = group.icon;
+
+  return (
+    <div className="flex w-full flex-col">
+      <button
+        type="button"
+        onClick={() => setIsOpen(!isOpen)}
+        className={cn(
+          'text-gray-300 hover:bg-gray-700 hover:text-white',
+          'group flex w-full items-center justify-between rounded-md p-2 text-base font-medium transition-all duration-200 ease-in-out',
+          isChildActive && 'bg-gray-900/40 text-white',
+        )}
+      >
+        <div className="flex items-center">
+          <Icon
+            className="mr-4 size-6 shrink-0 text-gray-400 group-hover:text-gray-300"
+            aria-hidden="true"
+          />
+          <span>{group.name}</span>
+        </div>
+        <ChevronRight
+          className={cn(
+            'size-4 text-gray-400 transition-transform duration-200',
+            isOpen && 'rotate-90 text-white',
+          )}
+        />
+      </button>
+
+      <div
+        className={cn(
+          'grid transition-all duration-200 ease-in-out',
+          isOpen
+            ? 'grid-rows-[1fr] opacity-100 mt-1'
+            : 'grid-rows-[0fr] opacity-0 overflow-hidden',
+        )}
+      >
+        <div className="ml-6 flex min-h-0 flex-col gap-1 overflow-hidden border-l border-gray-800 pl-4">
+          {group.items.map((item) => (
+            <NavLink
+              key={item.name}
+              to={item.to}
+              end
+              className={({ isActive }) =>
+                cn(
+                  'text-gray-400 hover:bg-gray-700/50 hover:text-white',
+                  'group flex w-full items-center rounded-md p-2 text-sm font-medium transition-colors duration-150',
+                  isActive && 'bg-gray-900 text-white font-semibold',
+                )
+              }
+            >
+              <item.icon
+                className="mr-3 size-4 shrink-0 text-gray-500 group-hover:text-gray-300"
+                aria-hidden="true"
+              />
+              {item.name}
+            </NavLink>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+const NavigationMenu = ({ checkAccess }: { checkAccess: any }) => {
+  const location = useLocation();
+  const { pathname } = location;
+
+  const navigationItems: NavigationItem[] = [
+    {
+      type: 'link',
+      name: 'Dashboard',
+      to: paths.app.dashboard.getHref(),
+      icon: Home,
+    },
+    {
+      type: 'link',
+      name: 'Production',
+      to: paths.app.production.getHref(),
+      icon: Home,
+    },
+    {
+      type: 'group',
+      name: 'Master Data',
+      icon: BrickWall,
+      items: [
+        {
+          name: 'Material',
+          to: paths.app.masterMaterial.getHref(),
+          icon: BrickWall,
+        },
+        {
+          name: 'Car Model',
+          to: paths.app.masterCarModel.getHref(),
+          icon: Car,
+        },
+        {
+          name: 'Customer',
+          to: paths.app.masterCustomer.getHref(),
+          icon: UserCheck,
+        },
+        {
+          name: 'Supplier',
+          to: paths.app.masterSupplier.getHref(),
+          icon: Truck,
+        },
+        {
+          name: 'Logistic',
+          to: paths.app.masterLogistic.getHref(),
+          icon: Truck,
+        },
+        {
+          name: 'BOM',
+          to: paths.app.masterBom.getHref(),
+          icon: ClipboardList,
+        },
+      ],
+    },
+    {
+      type: 'group',
+      name: 'Inventory',
+      icon: Layers,
+      items: [
+        {
+          name: 'Stock List',
+          to: paths.app.inventory.getHref(),
+          icon: ClipboardList,
+        },
+        {
+          name: 'Auto Order Settings',
+          to: paths.app.autoOrder.getHref(),
+          icon: Settings,
+        },
+      ],
+    },
+    {
+      type: 'group',
+      name: 'Administration',
+      icon: Shield,
+      items: [
+        { name: 'Role', to: paths.app.masterRole.getHref(), icon: Shield },
+        {
+          name: 'Role Permissions',
+          to: paths.app.masterRolePermissions.getHref(),
+          icon: Key,
+        },
+        { name: 'User', to: paths.app.masterUser.getHref(), icon: User },
+        checkAccess({ allowedRoles: [ROLES.ADMIN] }) && {
+          name: 'Users',
+          to: paths.app.users.getHref(),
+          icon: Users,
+        },
+      ].filter(Boolean) as NavigationLink[],
+    },
+  ];
+
+  return (
+    <div className="flex w-full flex-col gap-2">
+      {navigationItems.map((item) => {
+        if (item.type === 'link') {
+          return (
+            <NavLink
+              key={item.name}
+              to={item.to}
+              end
+              className={({ isActive }) =>
+                cn(
+                  'text-gray-300 hover:bg-gray-700 hover:text-white',
+                  'group flex w-full items-center rounded-md p-2 text-base font-medium transition-colors duration-150',
+                  isActive && 'bg-gray-900 text-white',
+                )
+              }
+            >
+              <item.icon
+                className="mr-4 size-6 shrink-0 text-gray-400 group-hover:text-gray-300"
+                aria-hidden="true"
+              />
+              {item.name}
+            </NavLink>
+          );
+        } else {
+          return (
+            <CollapsibleNavigationGroup
+              key={item.name}
+              group={item}
+              pathname={pathname}
+            />
+          );
+        }
+      })}
+    </div>
+  );
+};
+
 export function DashboardLayout({ children }: { children: React.ReactNode }) {
   const navigate = useNavigate();
   const logout = useLogout({
     onSuccess: () => navigate(paths.auth.login.getHref(location.pathname)),
   });
   const { checkAccess } = useAuthorization();
-  const navigation = [
-    { name: 'Dashboard', to: paths.app.dashboard.getHref(), icon: Home },
-    {
-      name: 'Master Material',
-      to: paths.app.masterMaterial.getHref(),
-      icon: BrickWall,
-    },
-    {
-      name: 'Master Car Model',
-      to: paths.app.masterCarModel.getHref(),
-      icon: Car,
-    },
-    {
-      name: 'Master Customer',
-      to: paths.app.masterCustomer.getHref(),
-      icon: UserCheck,
-    },
-    {
-      name: 'Master Supplier',
-      to: paths.app.masterSupplier.getHref(),
-      icon: Truck,
-    },
-    { name: 'Master Role', to: paths.app.masterRole.getHref(), icon: Shield },
-    {
-      name: 'Master Role Permissions',
-      to: paths.app.masterRolePermissions.getHref(),
-      icon: Key,
-    },
-    { name: 'Master User', to: paths.app.masterUser.getHref(), icon: User },
-    {
-      name: 'Master Logistic',
-      to: paths.app.masterLogistic.getHref(),
-      icon: Truck,
-    },
-    {
-      name: 'Master BOM',
-      to: paths.app.masterBom.getHref(),
-      icon: ClipboardList,
-    },
-    checkAccess({ allowedRoles: [ROLES.ADMIN] }) && {
-      name: 'Users',
-      to: paths.app.users.getHref(),
-      icon: Users,
-    },
-  ].filter(Boolean) as SideNavigationItem[];
 
   return (
     <div className="flex min-h-screen w-full flex-col bg-muted/40">
       <aside className="fixed inset-y-0 left-0 z-10 hidden w-60 flex-col border-r bg-black sm:flex">
-        <nav className="flex flex-col items-center gap-4 px-2 py-4">
-          <div className="flex h-16 shrink-0 items-center px-4">
-            <Logo />
-          </div>
-          {navigation.map((item) => (
-            <NavLink
-              key={item.name}
-              to={item.to}
-              end={item.name !== 'Discussions'}
-              className={({ isActive }) =>
-                cn(
-                  'text-gray-300 hover:bg-gray-700 hover:text-white',
-                  'group flex flex-1 w-full items-center rounded-md p-2 text-base font-medium',
-                  isActive && 'bg-gray-900 text-white',
-                )
-              }
-            >
-              <item.icon
-                className={cn(
-                  'text-gray-400 group-hover:text-gray-300',
-                  'mr-4 size-6 shrink-0',
-                )}
-                aria-hidden="true"
-              />
-              {item.name}
-            </NavLink>
-          ))}
+        <div className="flex h-16 shrink-0 items-center border-b border-gray-900 bg-black px-6">
+          <Logo />
+        </div>
+        <nav className="flex-1 overflow-y-auto px-4 py-6">
+          <NavigationMenu checkAccess={checkAccess} />
         </nav>
       </aside>
       <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-60">
@@ -185,35 +348,13 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
             </DrawerTrigger>
             <DrawerContent
               side="left"
-              className="bg-black pt-10 text-white sm:max-w-60"
+              className="flex h-full flex-col border-r border-gray-900 bg-black p-0 text-white sm:max-w-60"
             >
-              <nav className="grid gap-6 text-lg font-medium">
-                <div className="flex h-16 shrink-0 items-center px-4">
-                  <Logo />
-                </div>
-                {navigation.map((item) => (
-                  <NavLink
-                    key={item.name}
-                    to={item.to}
-                    end
-                    className={({ isActive }) =>
-                      cn(
-                        'text-gray-300 hover:bg-gray-700 hover:text-white',
-                        'group flex flex-1 w-full items-center rounded-md p-2 text-base font-medium',
-                        isActive && 'bg-gray-900 text-white',
-                      )
-                    }
-                  >
-                    <item.icon
-                      className={cn(
-                        'text-gray-400 group-hover:text-gray-300',
-                        'mr-4 size-6 shrink-0',
-                      )}
-                      aria-hidden="true"
-                    />
-                    {item.name}
-                  </NavLink>
-                ))}
+              <div className="flex h-16 shrink-0 items-center border-b border-gray-900 px-6">
+                <Logo />
+              </div>
+              <nav className="flex-1 overflow-y-auto px-4 py-6">
+                <NavigationMenu checkAccess={checkAccess} />
               </nav>
             </DrawerContent>
           </Drawer>

@@ -473,6 +473,60 @@ Daftarkan modul baru Anda di file router backend global:
   router.use('/customer', customerRouter);
   ```
 
+### G. Mengatur Role dan Role Permissions di Database (DB) & Backend (BE)
+Agar halaman Master baru Anda (misalnya Customer) hanya dapat diakses oleh user dengan Role tertentu (seperti `superadmin` atau `staff`), Anda harus mendaftarkannya ke dalam tabel permissions di database SQL Server (MSSQL).
+
+#### 1. Memahami Relasi Tabel Autentikasi & Otorisasi
+Di backend, ada tiga tabel utama yang mengatur keamanan ini:
+* **`amir.TB_M_ROLE`**: Menyimpan data role pengguna (ID: 1 untuk `superadmin`, ID: 2 untuk `staff`).
+* **`amir.TB_M_USER`**: Menyimpan data user (menghubungkan `ROLE_ID` ke tabel Role).
+* **`amir.TB_M_ROLE_PERMISSIONS`**: Menyimpan perizinan hak akses per role, memetakan `ROLE_ID` ke **`[FUNCTION]`** (fitur modul halaman) dan **`FEATURE`** (fitur aksi detail seperti view, create, edit, delete).
+
+#### 2. Cara Menambahkan Role Baru (Opsional)
+Jika Anda membutuhkan Role baru di luar `superadmin` dan `staff` (misalnya Role `manager`), Anda dapat menambahkan baris baru ke tabel Role:
+```sql
+INSERT INTO amir.TB_M_ROLE (ROLE_NAME, CREATED_BY)
+VALUES ('manager', 'system');
+```
+
+#### 3. Mendaftarkan Hak Akses Master Baru di Database
+Untuk setiap halaman master baru, Anda harus mendaftarkan perizinannya. Berdasarkan file controller `customer.controller.js` yang kita buat sebelumnya, terdapat aturan guard berikut:
+* `functionGuard('masterCustomer')`
+* `featureGuard('viewCustomer')`
+* `featureGuard('viewCustomerDetail')`
+* `featureGuard('createCustomer')`
+* `featureGuard('updateCustomer')`
+* `featureGuard('deleteCustomer')`
+
+Jalankan perintah SQL berikut di MSSQL Anda untuk mengizinkan Role mengakses fitur-fitur tersebut:
+
+##### A. Memberikan Izin Penuh ke Superadmin (ROLE_ID = 1)
+```sql
+INSERT INTO amir.TB_M_ROLE_PERMISSIONS (ROLE_ID, [FUNCTION], FEATURE, CREATED_BY)
+VALUES 
+(1, 'masterCustomer', 'viewCustomer', 'system'),
+(1, 'masterCustomer', 'viewCustomerDetail', 'system'),
+(1, 'masterCustomer', 'createCustomer', 'system'),
+(1, 'masterCustomer', 'updateCustomer', 'system'),
+(1, 'masterCustomer', 'deleteCustomer', 'system');
+```
+
+##### B. Memberikan Izin Terbatas (Hanya Lihat / Read-Only) ke Staff (ROLE_ID = 2)
+```sql
+INSERT INTO amir.TB_M_ROLE_PERMISSIONS (ROLE_ID, [FUNCTION], FEATURE, CREATED_BY)
+VALUES 
+(2, 'masterCustomer', 'viewCustomer', 'system'),
+(2, 'masterCustomer', 'viewCustomerDetail', 'system');
+```
+
+#### 4. Bagaimana Backend Membaca Hak Akses Ini?
+Ketika user melakukan login, file `be/src/api/auth/auth.service.js` akan memanggil database untuk mengambil daftar fitur (`features`) dan fungsi (`functions`) yang dimiliki user tersebut berdasarkan `ROLE_ID` mereka:
+```javascript
+const userFeature = await findUserFeatureByUsername(username); // Mengambil list string FEATURE
+const userFunction = await findUserFunctionByUsername(username); // Mengambil list string FUNCTION
+```
+Data ini dimasukkan ke dalam JWT token payload. Saat frontend memanggil API master, middleware `functionGuard` dan `featureGuard` di backend akan mengecek apakah string `FUNCTION` dan `FEATURE` yang diminta ada di dalam token payload user. Jika tidak ada, backend otomatis menolak request dengan status **`403 Access Denied`**.
+
 ---
 
 ## 4. Langkah 2: Registrasi URL Path di Frontend

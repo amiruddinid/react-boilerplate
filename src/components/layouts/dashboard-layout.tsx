@@ -14,6 +14,7 @@ import {
   ChevronRight,
   Settings,
   Layers,
+  Factory,
 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { NavLink, useNavigate, useNavigation, useLocation } from 'react-router';
@@ -204,7 +205,7 @@ const NavigationMenu = ({ checkAccess }: { checkAccess: any }) => {
       type: 'link',
       name: 'Production',
       to: paths.app.production.getHref(),
-      icon: Home,
+      icon: Factory,
     },
     {
       type: 'group',

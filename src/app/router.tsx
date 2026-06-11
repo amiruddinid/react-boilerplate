@@ -249,6 +249,27 @@ export const createAppRouter = (queryClient: QueryClient) =>
             ),
         },
         {
+          path: paths.app.production.path,
+          lazy: () =>
+            import('./routes/app/transaction/production/production').then(
+              convert(queryClient),
+            ),
+        },
+        {
+          path: paths.app.productionDetail.path,
+          lazy: () =>
+            import('./routes/app/transaction/production/production-detail').then(
+              convert(queryClient),
+            ),
+        },
+        {
+          path: paths.app.productionCreate.path,
+          lazy: () =>
+            import('./routes/app/transaction/production/create-production').then(
+              convert(queryClient),
+            ),
+        },
+        {
           path: paths.app.users.path,
           lazy: () => import('./routes/app/users').then(convert(queryClient)),
         },

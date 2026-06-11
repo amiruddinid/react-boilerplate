@@ -2,24 +2,15 @@ import * as React from 'react';
 import { Link, useSearchParams } from 'react-router';
 
 import { Button } from '@/components/ui/button';
-import { Form, Input, Select, Label, Switch } from '@/components/ui/form';
+import { Form, Input, Select } from '@/components/ui/form';
 import { paths } from '@/config/paths';
 import { useRegister, registerInputSchema } from '@/lib/auth';
-import { Team } from '@/types/api';
 
 type RegisterFormProps = {
   onSuccess: () => void;
-  chooseTeam: boolean;
-  setChooseTeam: () => void;
-  teams?: Team[];
 };
 
-export const RegisterForm = ({
-  onSuccess,
-  chooseTeam,
-  setChooseTeam,
-  teams,
-}: RegisterFormProps) => {
+export const RegisterForm = ({ onSuccess }: RegisterFormProps) => {
   const registering = useRegister({ onSuccess });
   const [searchParams] = useSearchParams();
   const redirectTo = searchParams.get('redirectTo');
@@ -66,13 +57,16 @@ export const RegisterForm = ({
               label="Role"
               error={formState.errors['ROLE_ID']}
               registration={register('ROLE_ID', { valueAsNumber: true })}
-              options={[{
-                label: 'Superadmin',
-                value: 1,
-              }, {
-                label: 'Staff',
-                value: 2,
-              }]}
+              options={[
+                {
+                  label: 'Superadmin',
+                  value: 1,
+                },
+                {
+                  label: 'Staff',
+                  value: 2,
+                },
+              ]}
             />
             <div>
               <Button

@@ -37,20 +37,22 @@ const loginWithEmailAndPassword = (data: LoginInput): Promise<AuthResponse> => {
   return api.post('/auth/login', data);
 };
 
-export const registerInputSchema = z
-  .object({
-    USERNAME: z.string().min(3, 'Username must be at least 3 characters long'),
-    PASSWORD: z.string().min(6, "Must be at least 6 characters")
-      .regex(/[A-Z]/, "Must contain at least one uppercase letter")
-      .regex(/[a-z]/, "Must contain at least one lowercase letter")
-      .regex(/[0-9]/, "Must contain at least one number")
-      .regex(/[^A-Za-z0-9]/, "Must contain at least one special character"),
-    NOREG: z.string()
-      .min(8, 'NOREG must be at least 8 characters long')
-      .regex(/^0\d{7}$/, "Must contain 8 character with 0 leading"),
-    EMAIL: z.string().email('Invalid email address'),
-    ROLE_ID: z.number().int().positive('ROLE_ID must be a positive integer')
-  })
+export const registerInputSchema = z.object({
+  USERNAME: z.string().min(3, 'Username must be at least 3 characters long'),
+  PASSWORD: z
+    .string()
+    .min(6, 'Must be at least 6 characters')
+    .regex(/[A-Z]/, 'Must contain at least one uppercase letter')
+    .regex(/[a-z]/, 'Must contain at least one lowercase letter')
+    .regex(/[0-9]/, 'Must contain at least one number')
+    .regex(/[^A-Za-z0-9]/, 'Must contain at least one special character'),
+  NOREG: z
+    .string()
+    .min(8, 'NOREG must be at least 8 characters long')
+    .regex(/^0\d{7}$/, 'Must contain 8 character with 0 leading'),
+  EMAIL: z.string().email('Invalid email address'),
+  ROLE_ID: z.number().int().positive('ROLE_ID must be a positive integer'),
+});
 
 export type RegisterInput = z.infer<typeof registerInputSchema>;
 
@@ -66,12 +68,12 @@ const authConfig = {
     const response = await loginWithEmailAndPassword(data);
     console.log('login response', response);
     const token = response.token;
-    localStorage.setItem('token', token)
+    localStorage.setItem('token', token);
     return response;
   },
   registerFn: async (data: RegisterInput) => {
     const response = await registerWithEmailAndPassword(data);
-    return response.user;
+    return response as any;
   },
   logoutFn: logout,
 };

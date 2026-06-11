@@ -43,8 +43,7 @@ api.interceptors.response.use(
       if (!isAuthPage && !isAuthProfileRequest) {
         // Hard redirect only for actual authenticated-user actions
         const searchParams = new URLSearchParams(window.location.search);
-        const redirectTo =
-          searchParams.get('redirectTo') || currentPath;
+        const redirectTo = searchParams.get('redirectTo') || currentPath;
         window.location.href = paths.auth.login.getHref(redirectTo);
       }
 

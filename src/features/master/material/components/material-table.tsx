@@ -1,11 +1,12 @@
 import { EyeIcon, Pencil } from 'lucide-react';
 import { Link, useNavigate } from 'react-router';
+
+import { Button } from '@/components/ui/button';
+import { Table } from '@/components/ui/table';
 import { paths } from '@/config/paths';
 
-import { Table } from '@/components/ui/table';
-
 import { useMaterial } from '../api/get-material';
-import { Button } from '@/components/ui/button';
+
 import MaterialDelete from './material-delete';
 
 const MaterialTable = () => {
@@ -19,8 +20,11 @@ const MaterialTable = () => {
 
   return (
     <div>
-      <Button variant="default" className="mb-4" 
-        onClick={() => navigate(paths.app.masterMaterialCreate.getHref())}>
+      <Button
+        variant="default"
+        className="mb-4"
+        onClick={() => navigate(paths.app.masterMaterialCreate.getHref())}
+      >
         Add New
       </Button>
       <Table
@@ -29,12 +33,12 @@ const MaterialTable = () => {
           {
             title: '',
             Cell: (row) => (
-              <div className='flex items-center'>
+              <div className="flex items-center">
                 <Link to={`/app/master/material/${row.entry.ID}`}>
                   <EyeIcon className="size-5 text-blue-500 hover:underline" />
                 </Link>
                 <Link to={`/app/master/material/${row.entry.ID}/edit`}>
-                  <Pencil className="size-5 text-yellow-500 hover:underline" />
+                  <Pencil className="ml-2 size-5 text-yellow-500 hover:underline" />
                 </Link>
                 <MaterialDelete id={row.entry.ID} />
               </div>

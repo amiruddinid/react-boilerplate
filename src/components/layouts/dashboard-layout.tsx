@@ -1,4 +1,17 @@
-import { Home, PanelLeft, BrickWall, Users, User2 } from 'lucide-react';
+import {
+  Home,
+  PanelLeft,
+  BrickWall,
+  Users,
+  User2,
+  Car,
+  UserCheck,
+  Truck,
+  Shield,
+  Key,
+  User,
+  ClipboardList,
+} from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { NavLink, useNavigate, useNavigation } from 'react-router';
 
@@ -84,7 +97,43 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
   const { checkAccess } = useAuthorization();
   const navigation = [
     { name: 'Dashboard', to: paths.app.dashboard.getHref(), icon: Home },
-    { name: 'Master Material', to: paths.app.masterMaterial.getHref(), icon: BrickWall },
+    {
+      name: 'Master Material',
+      to: paths.app.masterMaterial.getHref(),
+      icon: BrickWall,
+    },
+    {
+      name: 'Master Car Model',
+      to: paths.app.masterCarModel.getHref(),
+      icon: Car,
+    },
+    {
+      name: 'Master Customer',
+      to: paths.app.masterCustomer.getHref(),
+      icon: UserCheck,
+    },
+    {
+      name: 'Master Supplier',
+      to: paths.app.masterSupplier.getHref(),
+      icon: Truck,
+    },
+    { name: 'Master Role', to: paths.app.masterRole.getHref(), icon: Shield },
+    {
+      name: 'Master Role Permissions',
+      to: paths.app.masterRolePermissions.getHref(),
+      icon: Key,
+    },
+    { name: 'Master User', to: paths.app.masterUser.getHref(), icon: User },
+    {
+      name: 'Master Logistic',
+      to: paths.app.masterLogistic.getHref(),
+      icon: Truck,
+    },
+    {
+      name: 'Master BOM',
+      to: paths.app.masterBom.getHref(),
+      icon: ClipboardList,
+    },
     checkAccess({ allowedRoles: [ROLES.ADMIN] }) && {
       name: 'Users',
       to: paths.app.users.getHref(),

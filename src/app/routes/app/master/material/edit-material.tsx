@@ -8,8 +8,7 @@ const EditMaterialRoute = () => {
   return (
     <div>
       <h1>Material Edit</h1>
-      {/* props */}
-      <EditMaterial id={id} />
+      {id && <EditMaterial id={id} />}
     </div>
   );
 };

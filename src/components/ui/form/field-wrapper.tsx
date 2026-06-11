@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { type FieldError } from 'react-hook-form';
 
 import { Error } from './error';
 import { Label } from './label';
@@ -8,7 +7,7 @@ type FieldWrapperProps = {
   label?: string;
   className?: string;
   children: React.ReactNode;
-  error?: FieldError | undefined;
+  error?: any;
 };
 
 export type FieldWrapperPassThroughProps = Omit<

@@ -9,8 +9,7 @@ const MaterialDetailRoute = () => {
     <div>
       <h1>Material Detail</h1>
       <p>This is the Material Detail page.</p>
-      {/* props */}
-      <MaterialDetail id={id} />
+      {id && <MaterialDetail id={id} />}
     </div>
   );
 };

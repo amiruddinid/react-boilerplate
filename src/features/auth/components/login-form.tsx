@@ -42,7 +42,7 @@ export const LoginForm = ({ onSuccess }: LoginFormProps) => {
               <Button
                 isLoading={login.isPending}
                 type="submit"
-                className="w-full h-12 bg-red-600 hover:bg-white 
+                className="h-12 w-full bg-red-600 hover:bg-white 
                 hover:text-red-600"
               >
                 Log in

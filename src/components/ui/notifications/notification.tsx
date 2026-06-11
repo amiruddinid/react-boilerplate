@@ -22,18 +22,17 @@ export type NotificationProps = {
 };
 
 export const Notification = ({
-  notification: { id, type, title, message, duration = 1000},
+  notification: { id, type, title, message, duration = 1000 },
   onDismiss,
 }: NotificationProps) => {
-
   useEffect(() => {
     const autoClose = setTimeout(() => {
       onDismiss(id);
-    }, duration)
+    }, duration);
     //cleanup
     return () => {
       clearTimeout(autoClose);
-    }
+    };
   }, [duration]);
 
   return (

@@ -3,7 +3,6 @@ import { useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router';
 
 import logo from '@/assets/toyota.svg';
-import pattern from '@/assets/bg-pattern.png';
 import { Head } from '@/components/seo';
 import { Link } from '@/components/ui/link';
 import { paths } from '@/config/paths';
